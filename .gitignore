@@ -3,5 +3,9 @@ node_modules/
 
 # Fichiers d'environnement (si vous en utilisez)
 #.env
+
 # Fichiers de log
 logs/
+
+# Fichier .history à ignorer
+.history
