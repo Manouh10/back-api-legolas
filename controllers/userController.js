@@ -47,10 +47,11 @@ const userController = {
     // Obtenir tous les utilisateurs
     async getUsers(req, res) {
         try {
-            const users = await User.findAll({
+           /* const users = await User.findAll({
                 order: [['createdAt', 'DESC']]
             });
-            res.json(users);
+            res.json(users);*/
+             res.json("ahaaaaaaa");
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
