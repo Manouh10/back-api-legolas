@@ -51,8 +51,10 @@ const pool = require('../config/db');
 const getProductOfTheDay = async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM product_of_the_day');
-        
-        if (result.rows.length === 0) {
+
+        const rows = result[0]; // Correction ici
+
+        if (!rows || rows.length === 0) {
             return res.status(404).json({
                 success: false,
                 message: "Aucun produit du jour n'est disponible"
@@ -61,16 +63,18 @@ const getProductOfTheDay = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            data: result.rows[0]
+            data: rows[0]
         });
     } catch (error) {
         console.error('Erreur lors de la récupération du produit du jour:', error);
         res.status(500).json({
             success: false,
-            message: "Erreur lors de la récupération du produit du jour"
+            message: error.message
         });
     }
 };
+
+
 
 module.exports = {
     getProductOfTheDay
