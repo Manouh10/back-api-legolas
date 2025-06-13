@@ -1,6 +1,46 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes,Sequelize } = require("sequelize");
 const bcrypt = require("bcryptjs");
 const sequelize = require("../config/db");
+
+// const User = sequelize.define(
+//   "User",
+//   {
+//     id: {
+//       type: DataTypes.INTEGER,
+//       primaryKey: true,
+//       autoIncrement: true,
+//     },
+//     username: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//       validate: {
+//         len: [3, 255],
+//       },
+//     },
+//     email: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//       unique: true,
+//       validate: {
+//         isEmail: true,
+//       },
+//     },
+//     password: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//     },
+//   },
+//   {
+//     timestamps: true, // Ajoute automatiquement created_at et updated_at
+//     hooks: {
+//       beforeCreate: async (user) => {
+//         user.password = await bcrypt.hash(user.password, 10);
+//       },
+//     },
+//   }
+// );
+
+// Méthode d'instance pour vérifier le mot de passe
 
 const User = sequelize.define(
   "User",
@@ -10,37 +50,48 @@ const User = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    username: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [3, 255],
-      },
-    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-      validate: {
-        isEmail: true,
-      },
     },
-    password: {
+    password_hash: {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    first_name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    last_name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    user_type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "customer",
+    },
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.NOW,
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.NOW,
+    },
+    is_active: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
   },
   {
-    timestamps: true, // Ajoute automatiquement created_at et updated_at
-    hooks: {
-      beforeCreate: async (user) => {
-        user.password = await bcrypt.hash(user.password, 10);
-      },
-    },
+    timestamps: true, // Sequelize gère automatiquement createdAt et updatedAt
+    underscored: true, // Convertit les noms en snake_case pour correspondre à ta table SQL
   }
 );
 
-// Méthode d'instance pour vérifier le mot de passe
+module.exports = User;
 User.prototype.checkPassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
