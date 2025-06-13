@@ -26,10 +26,10 @@ const userController = {
     // Connexion
     async login(req, res) {
         try {
-            const { email, password } = req.body;
+            const { email, password_hash } = req.body;
             const user = await User.findOne({ where: { email } });
 
-            if (!user || !(await user.checkPassword(password))) {
+            if (!user || !(await user.checkPassword(password_hash))) {
                 return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
             }
 

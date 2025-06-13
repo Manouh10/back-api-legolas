@@ -16,11 +16,11 @@ const doc = {
   basePath: "/api",
   definitions: {
     User: {
-      username: "string",
-      email: "string",
-      password: "string",
+      email: "user@example.com",
+      password_hash: "string_hachée",
+      first_name: "Jean",
+      last_name: "Dupont",
     },
-
   },
 };
 
