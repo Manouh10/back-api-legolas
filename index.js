@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const sequelize = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
+const productRoutes = require("./routes/productRoutes");
 const swaggerUi = require("swagger-ui-express");
 const swaggerFile = require("./swagger_output.json");
 const app = express();
@@ -27,6 +28,7 @@ app.use(express.json());
 // Routes
 
 app.use("/api/users", userRoutes);
+app.use("/api/products", productRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 // Route de test
