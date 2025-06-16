@@ -1,12 +1,9 @@
-btenir le produit du jour:
+obtenir le produit du jour:
 GET http://localhost:3000/api/products/product-of-the-day
-
 Obtenir tous les produits:
 GET http://localhost:3000/api/products
-
 Obtenir un produit par ID:
 GET http://localhost:3000/api/products/1
-
 Créer un nouveau produit:
 POST http://localhost:3000/api/products
 {
@@ -17,7 +14,6 @@ POST http://localhost:3000/api/products
   "imageUrl": "https://example.com/tshirt-geek.jpg",
   "isProductOfTheDay": false
 }
-
 Mettre à jour un produit:
 PUT http://localhost:3000/api/products/1
 {
@@ -28,6 +24,5 @@ PUT http://localhost:3000/api/products/1
   "imageUrl": "https://example.com/tshirt-geek-v2.jpg",
   "isProductOfTheDay": true
 }
-
 Supprimer un produit:
 DELETE http://localhost:3000/api/products/1
