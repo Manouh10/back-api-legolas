@@ -2,7 +2,7 @@
 const Produit = require("../models/produitModel");
 const sequelize = require("../config/db"); // Importez l'instance de sequelize pour les transactions
 const { Sequelize } = require("sequelize"); // Importez Sequelize pour les opérateurs (comme Op.ne)
-
+const pool = require('../config/db');
 const produitController = {
   /**
    * @swagger
@@ -362,31 +362,35 @@ const produitController = {
    * type: string
    * example: "Erreur lors de la récupération du produit du jour"
    */
-  async getProductOfTheDay(req, res) {
+   
+
+   async getProductOfTheDay (req, res)  {
     try {
-      const produitOfTheDay = await Produit.findOne({
-        where: { isProductOfTheDay: true }
-      });
+        const result = await pool.query('SELECT * FROM product_of_the_day');
 
-      if (!produitOfTheDay) {
-        return res.status(404).json({
-          success: false,
-          message: "Aucun produit du jour n'est disponible"
+        const rows = result[0]; // Correction ici
+
+        if (!rows || rows.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "Aucun produit du jour n'est disponible"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: rows[0]
         });
-      }
-
-      res.status(200).json({
-        success: true,
-        data: produitOfTheDay
-      });
     } catch (error) {
-      console.error('Erreur lors de la récupération du produit du jour:', error);
-      res.status(500).json({
-        success: false,
-        message: error.message
-      });
+        console.error('Erreur lors de la récupération du produit du jour:', error);
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
     }
-  },
+},
+
+
 };
 
 module.exports = produitController;
