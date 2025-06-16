@@ -1,7 +1,7 @@
 // routes/cartRoutes.js
 const express = require("express");
 const router = express.Router();
-const panierController = require("../controllers/panierController");
+const cartController = require("../controllers/cartController");
 const auth = require("../middleware/auth"); // Middleware d'authentification existant
 const { body } = require("express-validator"); // Pour la validation
 
@@ -65,38 +65,24 @@ const { body } = require("express-validator"); // Pour la validation
  * $ref: '#/components/schemas/Produit'
  */
 
+// Validation pour les éléments du panier
+const cartItemValidation = [
+    body('productId')
+        .isInt()
+        .withMessage('L\'ID du produit doit être un nombre entier'),
+    body('quantity')
+        .isInt({ min: 1 })
+        .withMessage('La quantité doit être un nombre entier positif')
+];
 
-// Obtenir le panier de l'utilisateur authentifié
-router.get("/", auth, panierController.getCart);
+// Routes du panier
+router.get('/', auth, cartController.getCart);
+router.post('/', auth, cartController.createCart);
+router.delete('/', auth, cartController.clearCart);
 
-// Ajouter un produit au panier ou mettre à jour sa quantité
-router.post(
-  "/add",
-  auth,
-  [
-    body("produitId").isInt().withMessage("L'ID du produit doit être un entier."),
-    body("quantity").isInt({ min: 1 }).withMessage("La quantité doit être un entier positif."),
-  ],
-  panierController.addProductToCart
-);
-
-// Mettre à jour la quantité d'un article spécifique dans le panier
-router.put(
-  "/update-item",
-  auth,
-  [
-    body("produitId").isInt().withMessage("L'ID du produit doit être un entier."),
-    body("newQuantity")
-      .isInt({ min: 0 })
-      .withMessage("La nouvelle quantité doit être un entier positif ou zéro."),
-  ],
-  panierController.updateCartItemQuantity
-);
-
-// Supprimer un produit du panier
-router.delete("/remove/:produitId", auth, panierController.removeProductFromCart);
-
-// Vider le panier de l'utilisateur
-router.delete("/clear", auth, panierController.clearCart);
+// Routes des éléments du panier
+router.post('/items', auth, cartItemValidation, cartController.addItemToCart);
+router.put('/items/:itemId', auth, cartItemValidation, cartController.updateCartItem);
+router.delete('/items/:itemId', auth, cartController.removeCartItem);
 
 module.exports = router;
