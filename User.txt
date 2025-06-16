@@ -1,0 +1,40 @@
+REGISTER:
+POST http://localhost:3000/api/users/register
+{
+  "email": "test@gmail.com",
+  "password_hash": "manoa",           
+  "first_name": "Manoa",
+  "last_name": "Hosea",
+  "user_type": "customer",
+  "is_active": true
+}
+
+LOGIN:
+POST http://localhost:3000/api/users/login
+{
+  "email": "hahaha@gmail.com",
+  "password_hash": "manoa"    
+}
+
+Obtenir tous les utilisateurs:
+GET http://localhost:3000/api/users
+
+Obtenir un utilisateur par ID:
+GET http://localhost:3000/api/users/1
+
+Mettre à jour un utilisateur:
+PUT http://localhost:3000/api/users/1
+{
+    "email": "admin@frodon.com",
+      "first_name": "GandalfA",
+    "last_name": "le Gris",
+    "user_type": "admin",
+     "is_active": true
+}
+
+Supprimer un utilisateur
+DELETE http://localhost:3000/api/users/12
+
+
+
+
