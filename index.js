@@ -90,8 +90,8 @@ sequelize
     // --- Supprimer la vue qui pourrait poser problème lors de l'alteration des tables ---
     // Cette étape est souvent nécessaire car Sequelize peut modifier des colonnes
     // dont la vue dépend, et PostgreSQL empêche ces modifications tant que la vue existe.
-    await executeRawSql('DROP VIEW IF EXISTS cart_details CASCADE;');
-    console.log("Vue 'cart_details' supprimée (si elle existait).");
+    // await executeRawSql('DROP VIEW IF EXISTS cart_details CASCADE;');
+    // console.log("Vue 'cart_details' supprimée (si elle existait).");
 
     // --- Synchroniser les modèles Sequelize ---
     // `alter: true` pour appliquer les changements de schéma

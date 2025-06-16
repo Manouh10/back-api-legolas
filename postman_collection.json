@@ -24,7 +24,7 @@
               "raw": "{\n    \"email\": \"legolas@frodon.com\",\n    \"password\": \"su$t0m3r2\"\n}"
             },
             "url": {
-              "raw": "{{base_url}}/api/auth/login",
+              "raw": "{{base_url}}/api/users/login",
               "host": ["{{base_url}}"],
               "path": ["api", "auth", "login"]
             }
@@ -46,7 +46,7 @@
               "raw": "{\n    \"email\": \"newuser@frodon.com\",\n    \"password\": \"password123\",\n    \"firstName\": \"New\",\n    \"lastName\": \"User\"\n}"
             },
             "url": {
-              "raw": "{{base_url}}/api/auth/register",
+              "raw": "{{base_url}}/api/users/register",
               "host": ["{{base_url}}"],
               "path": ["api", "auth", "register"]
             }
@@ -64,7 +64,7 @@
               }
             ],
             "url": {
-              "raw": "{{base_url}}/api/auth/refresh-token",
+              "raw": "{{base_url}}/api/users/refresh-token",
               "host": ["{{base_url}}"],
               "path": ["api", "auth", "refresh-token"]
             }
@@ -453,7 +453,7 @@
       ]
     },
     {
-      "name": "Products with Category",
+      "name": "Products with Categories",
       "item": [
         {
           "name": "Get All Products with Categories",
@@ -587,7 +587,7 @@
           }
         },
         {
-          "name": "Get Cart Details by Minimum Total",
+          "name": "Get Cart Details by Min Total",
           "request": {
             "method": "GET",
             "header": [
@@ -614,7 +614,7 @@
     },
     {
       "key": "token",
-      "value": "votre_token_jwt"
+      "value": "your_jwt_token_here"
     },
     {
       "key": "refresh_token",
