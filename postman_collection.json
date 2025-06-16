@@ -1,10 +1,190 @@
 {
   "info": {
-    "name": "Legolas API - Cart & Products",
-    "description": "Collection pour tester l'API du panier et des produits",
+    "name": "Legolas API - Complete Collection",
+    "description": "Collection complète pour tester l'API Legolas",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"legolas@frodon.com\",\n    \"password\": \"su$t0m3r2\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"newuser@frodon.com\",\n    \"password\": \"password123\",\n    \"firstName\": \"New\",\n    \"lastName\": \"User\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{refresh_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/auth/refresh-token",
+              "host": ["{{base_url}}"],
+              "path": ["api", "auth", "refresh-token"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/users",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users"]
+            }
+          }
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/users/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "1"]
+            }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Legolas\",\n    \"lastName\": \"de Vertfeuille\",\n    \"email\": \"legolas@frodon.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/users/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "1"]
+            }
+          }
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"currentPassword\": \"oldPassword123\",\n    \"newPassword\": \"newPassword123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users/change-password",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "change-password"]
+            }
+          }
+        }
+      ]
+    },
     {
       "name": "Cart",
       "item": [
@@ -271,6 +451,160 @@
           }
         }
       ]
+    },
+    {
+      "name": "Products with Category",
+      "item": [
+        {
+          "name": "Get All Products with Categories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/products-with-category",
+              "host": ["{{base_url}}"],
+              "path": ["api", "products-with-category"]
+            }
+          }
+        },
+        {
+          "name": "Get Product with Category by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/products-with-category/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "products-with-category", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Products by Category",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/products-with-category/category/potions-elixirs",
+              "host": ["{{base_url}}"],
+              "path": ["api", "products-with-category", "category", "potions-elixirs"]
+            }
+          }
+        },
+        {
+          "name": "Get Products in Stock",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/products-with-category/stock/available",
+              "host": ["{{base_url}}"],
+              "path": ["api", "products-with-category", "stock", "available"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cart Details",
+      "item": [
+        {
+          "name": "Get All Cart Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/cart-details",
+              "host": ["{{base_url}}"],
+              "path": ["api", "cart-details"]
+            }
+          }
+        },
+        {
+          "name": "Get Cart Details by Cart ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/cart-details/cart/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "cart-details", "cart", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Cart Details by User Email",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/cart-details/user/legolas@frodon.com",
+              "host": ["{{base_url}}"],
+              "path": ["api", "cart-details", "user", "legolas@frodon.com"]
+            }
+          }
+        },
+        {
+          "name": "Get Cart Details by Minimum Total",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/cart-details/min-total/1000",
+              "host": ["{{base_url}}"],
+              "path": ["api", "cart-details", "min-total", "1000"]
+            }
+          }
+        }
+      ]
     }
   ],
   "variable": [
@@ -281,6 +615,10 @@
     {
       "key": "token",
       "value": "votre_token_jwt"
+    },
+    {
+      "key": "refresh_token",
+      "value": "votre_refresh_token"
     }
   ]
 } 

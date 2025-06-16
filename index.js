@@ -16,6 +16,8 @@ const LignePanier = require("./models/lignePanierModel");
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
 const cartRoutes = require("./routes/cartRoutes");
+const productWithCategoryRoutes = require('./routes/productWithCategoryRoutes');
+const cartDetailRoutes = require('./routes/cartDetailRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -53,6 +55,8 @@ LignePanier.belongsTo(Produit, {
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
+app.use("/api/products-with-category", productWithCategoryRoutes);
+app.use("/api/cart-details", cartDetailRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 // Route de test
