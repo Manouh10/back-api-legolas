@@ -33,7 +33,18 @@ const userController = {
                  console.log("aaaa");
                 return res.status(401).json({ message: 'Email ou mot de passe incorrect' }); 
             }  
-             const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '24h' }); 
+          
+
+            const tokenPayload = {
+            id: user.id,
+            first_name: user.first_name,
+            email: user.email,
+            last_name:user.last_name,
+            user_type:user.user_type,
+            is_active:user.is_active
+            };
+
+               const token = jwt.sign(tokenPayload, process.env.JWT_SECRET, { expiresIn: '24h' }); 
             
              res.json({
                 user,

@@ -121,3 +121,45 @@ CREATE TRIGGER update_products_updated_at BEFORE UPDATE ON products
 
 -- Vérification de l'encodage
 SELECT name, setting FROM pg_settings WHERE name LIKE '%encoding%';
+
+-- Panier
+CREATE TABLE carts (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_active BOOLEAN DEFAULT true
+);
+
+CREATE TABLE cart_items (
+    id SERIAL PRIMARY KEY,
+    cart_id INTEGER REFERENCES carts(id) ON DELETE CASCADE,
+    product_id INTEGER REFERENCES products(id),
+    quantity INTEGER NOT NULL CHECK (quantity > 0),
+    added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_cart_user ON carts(user_id);
+CREATE INDEX idx_cart_items_cart ON cart_items(cart_id);
+CREATE INDEX idx_cart_items_product ON cart_items(product_id);
+
+CREATE TRIGGER update_carts_updated_at BEFORE UPDATE ON carts 
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+CREATE VIEW cart_details AS
+SELECT 
+    ci.id AS cart_item_id,
+    c.id AS cart_id,
+    u.email AS user_email,
+    p.id AS product_id,
+    p.name AS product_name,
+    p.price,
+    p.currency,
+    ci.quantity,
+    (p.price * ci.quantity) AS total_price,
+    ci.added_at
+FROM cart_items ci
+JOIN carts c ON ci.cart_id = c.id
+JOIN users u ON c.user_id = u.id
+JOIN products p ON ci.product_id = p.id
+WHERE c.is_active = true;
